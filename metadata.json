@@ -1,0 +1,6 @@
+{
+  "name": "IQAS Ergonomic Workspace Evaluator",
+  "description": "Workspace ergonomic self-assessment and digital checklist compliant with Portuguese SST / Decreto-Lei 349/93 legislation for home and office setups with analytics dashboard.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

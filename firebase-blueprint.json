@@ -1,0 +1,76 @@
+{
+  "entities": {
+    "Assessment": {
+      "title": "Assessment Record",
+      "description": "Ergonomic assessment record for a specific employee and workstation.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique assessment ID" },
+        "employeeName": { "type": "string", "description": "Name of the employee assessed" },
+        "employeeDepartment": { "type": "string", "description": "Department of the employee" },
+        "evaluatorName": { "type": "string", "description": "Name of evaluator or SST auditor" },
+        "setupType": { "type": "string", "description": "home or office" },
+        "date": { "type": "string", "description": "ISO timestamp of evaluation" },
+        "scorePercent": { "type": "number", "description": "Calculated compliance score 0-100" },
+        "riskLevel": { "type": "string", "description": "low, medium, or high" },
+        "totalEvaluated": { "type": "number", "description": "Total evaluated items" },
+        "compliantCount": { "type": "number", "description": "Count of compliant items" },
+        "improvementCount": { "type": "number", "description": "Count of improvement items" },
+        "nonCompliantCount": { "type": "number", "description": "Count of non-compliant items" },
+        "naCount": { "type": "number", "description": "Count of N/A items" },
+        "overallNotes": { "type": "string", "description": "Overall evaluation summary notes" }
+      },
+      "required": ["id", "employeeName", "setupType", "date", "scorePercent"]
+    },
+    "ActionItem": {
+      "title": "Action Item",
+      "description": "Corrective action plan item resulting from an ergonomic evaluation.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Action item ID" },
+        "assessmentId": { "type": "string", "description": "Linked assessment ID" },
+        "employeeName": { "type": "string", "description": "Assigned or associated employee name" },
+        "itemId": { "type": "string", "description": "Checklist item ID" },
+        "itemTitlePt": { "type": "string", "description": "Item title in Portuguese" },
+        "categoryTitlePt": { "type": "string", "description": "Category title in Portuguese" },
+        "setupType": { "type": "string", "description": "home or office" },
+        "priority": { "type": "string", "description": "high, medium, low" },
+        "costCategory": { "type": "string", "description": "free, low, requisition" },
+        "legalRef": { "type": "string", "description": "SST / DL 349/93 legal reference" },
+        "status": { "type": "string", "description": "pending, in_progress, completed" },
+        "createdAt": { "type": "string", "description": "Creation date" },
+        "targetDate": { "type": "string", "description": "Target resolution date" },
+        "assignedTo": { "type": "string", "description": "Assigned person or department" },
+        "notes": { "type": "string", "description": "Action notes" }
+      },
+      "required": ["id", "itemTitlePt", "status", "createdAt"]
+    },
+    "AppOwnerSettings": {
+      "title": "App Owner Settings",
+      "description": "Configuration settings configured by app owner including recipient emails.",
+      "type": "object",
+      "properties": {
+        "ownerEmail": { "type": "string", "description": "Primary owner email address" },
+        "secondaryEmails": { "type": "string", "description": "Additional recipient email addresses separated by commas" },
+        "organizationName": { "type": "string", "description": "Organization name (e.g. IQAS)" },
+        "defaultLanguage": { "type": "string", "description": "Default language pt or en" },
+        "updatedAt": { "type": "string", "description": "ISO timestamp" }
+      },
+      "required": ["ownerEmail"]
+    }
+  },
+  "firestore": {
+    "/assessments/{assessmentId}": {
+      "schema": { "$ref": "#/entities/Assessment" },
+      "description": "Stores saved ergonomic assessment records per employee."
+    },
+    "/actionItems/{actionItemId}": {
+      "schema": { "$ref": "#/entities/ActionItem" },
+      "description": "Stores corrective action items across assessments."
+    },
+    "/settings/ownerConfig": {
+      "schema": { "$ref": "#/entities/AppOwnerSettings" },
+      "description": "Stores application owner settings and default email configuration."
+    }
+  }
+}
